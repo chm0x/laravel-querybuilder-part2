@@ -62,3 +62,37 @@ DB::transaction(function(){
         ->increment('balance', 20);
 });
 ```
+## paginate()
+
+It used for display data in a paginated format on a web page, but it retrieves all the data at once and then it breaks the data into pages. ***Its inefficient when working with very large data sets.***
+
+**Its recommendable using chunk() method.**
+
+## Chunking Data - chunk() method
+
+It allows you to efficiently handle large data sets. 
+
+The chunk() method retrieves data in smaller more manageable "chunks" rather than getting all data and chunking if afterwards. This make a big difference in terms of performance and resource usage. 
+
+parameter1: how many data we retrieve to you
+parameter2: callback function
+```
+$posts = DB::table('posts')
+        ->orderBy('id')
+        
+        ->chunk(150, function($posts){
+            foreach($posts as $post){
+                dump($post->title);
+        }
+});
+# the callback function receives each chunk of data
+# as it argument, so every 150 post chunks will
+# be set equal to a variable named posts.
+# Using the callback function allows you to work with each
+# chunk of data separately, it can be useful for things like
+# performing calculations, filtering data, or transferring the
+# data into a different format. 
+
+# returns true
+dd($posts);
+```

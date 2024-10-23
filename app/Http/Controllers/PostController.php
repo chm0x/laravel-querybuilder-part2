@@ -12,17 +12,25 @@ class PostController extends Controller
      */
     public function index()
     {
-        DB::transaction(function(){
-            DB::table('users')
-                ->where('id', 1)
-                ->lockForUpdate()
-                ->decrement('balance', 20);
-            
-            DB::table('users')
-                ->where('id', 2)
-                ->increment('balance', 20);
-        });
-        // dd();
+        $posts = DB::table('posts')
+                    ->orderBy('id')
+                    # parameter1: how many data we retrieve to you
+                    # parameter2: callback function
+                    ->chunk(150, function($posts){
+                        // foreach($posts as $post){
+                        //     dump($post->title);
+                        // }
+                    });
+        # the callback function receives each chunk of data
+        # as it argument, so every 150 post chunks will
+        # be set equal to a variable named posts.
+        # Using the callback function allows you to work with each
+        # chunk of data separately, it can be useful for things like
+        # performing calculations, filtering data, or transferring the
+        # data into a different format. 
+
+        # returns true
+        dd($posts);
     }
 
     /**
