@@ -21,3 +21,44 @@ DB::transaction(function(){
         ->increment('balance', 20);
 }); 
 ```
+
+## PESSIMISTIC LOCKING
+
+The pessimistic locking is a technique that is used to prevent conflicts between multiple users when accessing the same resource.
+
+Example scenario: Two users want to update the balance of a user in the users table.
+Without passimistic locking, both user could update the balance at the same time and potentially overwrite each other's changes. This can lead incosistencies in the data, it can also cause issues with the app's functionalities. 
+
+With pessimistic locking, which will ensure that only one user can update the balance at a time. 
+
+It can be added inside a database transaction. 
+
+
+This lockForUpdate() method *locks* the selected row until the transaction is completed.  
+```
+DB::transaction(function(){
+    DB::table('users')
+        ->where('id', 1)
+        ->lockForUpdate()
+        ->decrement('balance', 20);
+    
+    DB::table('users')
+        ->where('id', 2)
+        ->increment('balance', 20);
+});
+```
+
+sharedLock() method can be used for locking rows in a table.
+Similar to above, but it *locks the selected row for shared reading instead of exclusive writing*. This means that the other users can still read the locked rows, but they cannot modify them until the lock is released. (recommended)
+```
+DB::transaction(function(){
+    DB::table('users')
+        ->where('id', 1)
+        ->sharedLock()
+        ->decrement('balance', 20);
+    
+    DB::table('users')
+        ->where('id', 2)
+        ->increment('balance', 20);
+});
+```

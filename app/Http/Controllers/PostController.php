@@ -15,6 +15,7 @@ class PostController extends Controller
         DB::transaction(function(){
             DB::table('users')
                 ->where('id', 1)
+                ->lockForUpdate()
                 ->decrement('balance', 20);
             
             DB::table('users')
