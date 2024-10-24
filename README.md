@@ -330,3 +330,15 @@ $posts = DB::table('posts')
     # Change the name to URL for pagination
     ->paginate(2, pageName: 'test');
 ```
+
+## simplePaginate()
+
+This is a helper function on the Laravel QueryBuilder that enables pagination of records retrieved from the database. Its the same as paginate() method, but there are some impactful changes. 
+
+In the frontend, all are the same as paginate() method. **But the view is better than paginate()**. 
+
+***simplePaginate() should be used when working with a large data sets, its more efficient than the paginate methods.*** The reason is simply uses less memory to paginate records compared to the paginate() method.
+```
+$posts = DB::table('posts')
+    ->simplePaginate(2);
+```

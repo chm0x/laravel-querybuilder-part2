@@ -13,16 +13,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = DB::table('posts')
-            # 1 parameters: specific the number of records you want.
-            # default: 15
-            ->paginate(2, pageName: 'test');
-            # dont use the get() method.
-
-        // $posts = DB::table('posts')
-        //     # 1 parameters: specific the number of records you want.
-        //     # default: 15
-        //     ->paginate(2);
-        //     # dont use the get() method.
+                    ->simplePaginate(2);
 
         return view('posts.index', compact('posts'));
         
