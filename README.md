@@ -160,3 +160,33 @@ $posts = DB::table('posts')
 
 dd($posts);
 ```
+
+## raw methods
+
+Write your own custom queries.
+
+```
+# SELECT RAW
+$posts = DB::table('posts')
+    ->selectRaw('count(*) as post_count')
+    ->first();
+
+# WHERE RAW
+$posts = DB::table('posts')
+    ->whereRaw('created_at > now() - INTERVAL 1 DAY')
+    ->get();
+    # ->first();
+
+# GROUPBY RAW
+$posts = DB::table('posts')
+    ->select('user_id', DB::raw('AVG(min_to_read) AS avg_mintoread'))
+    ->groupByRaw('user_id')
+    ->get();
+
+# HAVING RAW
+$posts = DB::table('posts')
+    ->select('user_id', DB::raw( 'SUM(min_to_read) AS total_time' ) )
+    ->groupBy('user_id')
+    ->havingRaw('total_time > 5 ')
+    ->get();
+```
