@@ -267,3 +267,22 @@ $posts = DB::table('posts')
     ->orWhereFullText('description', 'Recusandae')
     ->get();
 ```
+
+## limit & offset 
+
+The limit() method is used to limit the number of records that are returned from a query.
+
+The offset() method is used to skip a specified number of records from the beginning of a query. 
+
+Those methods *can be inefficient for large data sets*. 
+
+```
+$posts = DB::table('posts')
+    ->limit(10)
+    ->get();
+
+$posts = DB::table('posts')
+    ->offset(2)
+    ->limit(10)
+    ->get();
+```
