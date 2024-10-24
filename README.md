@@ -301,5 +301,16 @@ $posts = DB::table('posts')
     ->get();
 ```
 
-## remove()
+## remove existing ordering
 
+```
+$posts = DB::table('posts')
+    ->orderBy('is_published')
+    ->get();
+
+$posts = DB::table('posts')
+    ->orderBy('is_published');
+
+$unorderedPost = $posts->reorder()->get();
+$unorderedPost = $posts->reorder('title', 'desc')->get();
+```
