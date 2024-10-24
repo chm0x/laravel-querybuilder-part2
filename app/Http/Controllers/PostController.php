@@ -13,22 +13,17 @@ class PostController extends Controller
     public function index()
     {
         $posts = DB::table('posts')
-                    ->orderBy('id')
-                    # parameter1: how many data we retrieve to you
-                    # parameter2: callback function
-                    ->chunk(150, function($posts){
-                        // foreach($posts as $post){
-                        //     dump($post->title);
-                        // }
-                    });
-        # the callback function receives each chunk of data
-        # as it argument, so every 150 post chunks will
-        # be set equal to a variable named posts.
-        # Using the callback function allows you to work with each
-        # chunk of data separately, it can be useful for things like
-        # performing calculations, filtering data, or transferring the
-        # data into a different format. 
+                ->where('id', 1)
+                ->lazyById()
+                ->first();
+        // $posts = DB::table('posts')
+        //             ->orderBy('id')
+        //             ->lazy()
+        //             ->each(function($post){
+        //                 dump($post->title);
+        //             });
 
+        
         # returns true
         dd($posts);
     }

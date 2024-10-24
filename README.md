@@ -96,3 +96,67 @@ $posts = DB::table('posts')
 # returns true
 dd($posts);
 ```
+
+## lazy load
+
+Next to chunking data, you are also able to lazy load data when working with large data sets.
+
+One common issue that dev face is memory exhaustion caused by loading too much data into memory at once. 
+Laravel provides **two methods** that can help you with this issue.
+
+One is the **lazy()** method and the **lazyById()** method
+
+### lazy() 
+
+This is used to retrieve a large number of records without overwhelming the server's memory. 
+
+It returns an instance of the lazy collection which fetches results in small chunks as they are iterated over. 
+
+```
+$posts = DB::table('posts')
+        ->orderBy('id')
+        ->lazy();
+
+# You can iterate.
+foreach($posts as $post){
+    dump($post);
+}
+
+# or withou foreach, use each()
+$posts = DB::table('posts')
+        ->orderBy('id')
+        ->lazy()
+        ->each(function($post){
+            dump($post);
+            dump($post->title);
+        });
+
+# returns an instance
+dd($posts);
+```
+
+### lazyById()
+
+This is quite similar to the lazy() method, but it's used to retrieve a single record by its ID.
+
+It's mainly used to retrieve a single record by its ID. It can be useful when you want to retrieve a specific record from the database without loading all the records into memory at once. 
+```
+$posts = DB::table('posts')
+        ->where('id', 1)
+        ->lazyById();
+
+$posts = DB::table('posts')
+        ->where('id', 1)
+        ->lazyById()
+        ->first();
+            
+
+$posts = DB::table('posts')
+        ->where('id', 1)
+        ->lazyById()
+        ->each(function($post){
+            dump($post);
+        });
+
+dd($posts);
+```
