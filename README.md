@@ -231,3 +231,39 @@ $posts = DB::table('posts')
     ->oldest('title')
     ->get();
 ```
+
+## full text indexes
+
+These are useful when you need to efficiently search for words or phrases in a text. This is helpful in application that involves searching through large amounts of text, such as blog or a search engine.
+
+They are mainly designed for searching through large amounts of datasets. 
+
+There are 7 full text indexes:
+* $table->primary('id');
+* $table->primary(['id', 'parent_id']);
+* $table->unique('email');
+* $table->index('state');
+* $table->fulltext('body');
+* $table->spatialindex('location');
+
+```
+> php artisan make:migration set_description_to_text_on_posts_table --table=posts
+```
+
+**whereFullText() && orWhereFullText()**
+
+
+
+```
+#Has two arguments, the first is the column, the second is the text that you want to search.
+# No case sensitive.
+$posts = DB::table('posts')
+    ->whereFullText('description', 'asperiores')
+    ->get();
+
+# orWhereFullText
+$posts = DB::table('posts')
+    ->whereFullText('description', 'asperiores')
+    ->orWhereFullText('description', 'Recusandae')
+    ->get();
+```

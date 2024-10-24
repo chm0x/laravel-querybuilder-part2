@@ -13,11 +13,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = DB::table('posts')
-            ->latest('title')
-            ->get();
-        
-        $posts = DB::table('posts')
-            ->oldest('title')
+            ->whereFullText('description', 'asperiores')
+            ->orWhereFullText('description', 'Recusandae')
             ->get();
 
         
