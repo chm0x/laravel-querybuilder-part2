@@ -13,7 +13,10 @@ class PostController extends Controller
     public function index()
     {
         $posts = DB::table('posts')
-                    ->simplePaginate(2);
+                # you must specified a ORDERBY clause when usin cursorPaginate()
+                ->orderBy('id')
+                ->cursorPaginate(2)    
+                ;
 
         return view('posts.index', compact('posts'));
         

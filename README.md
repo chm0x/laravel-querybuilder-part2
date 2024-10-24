@@ -338,7 +338,28 @@ This is a helper function on the Laravel QueryBuilder that enables pagination of
 In the frontend, all are the same as paginate() method. **But the view is better than paginate()**. 
 
 ***simplePaginate() should be used when working with a large data sets, its more efficient than the paginate methods.*** The reason is simply uses less memory to paginate records compared to the paginate() method.
+
 ```
 $posts = DB::table('posts')
     ->simplePaginate(2);
+```
+
+## cursorPaginate()
+
+This is a method of pagination that uses a cursor or a pointer to navigate through a set of data with cursor pagination. **Its useful for large datasets**.
+
+Data is retrieved in smaller chunk rather than all at once. paginate() and simplePaginate() dont retrieve a small chunk of data. 
+
+advantage: faster data retrieval, more accurate sorting of data.
+
+disadvantage: more complex to implement, less intuitive for users, more resource intensive
+
+**It can only be used with ordered data**. Challenging when dealing with unstructured or unordered data.
+
+```
+$posts = DB::table('posts')
+    # you must specified a ORDERBY clause when usin cursorPaginate()
+    ->orderBy('id')
+    ->cursorPaginate(2)    
+    ;
 ```
