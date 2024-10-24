@@ -286,3 +286,20 @@ $posts = DB::table('posts')
     ->limit(10)
     ->get();
 ```
+
+## conditional clauses when()
+
+advantage: simplicity, flexibility, readability
+
+disadvantage: perfomance, debugging
+
+```
+$posts = DB::table('posts')
+    ->when(function($query){
+        return $query->where('is_published', false);
+    })
+    ->get();
+```
+
+## remove()
+

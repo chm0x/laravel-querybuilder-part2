@@ -13,13 +13,10 @@ class PostController extends Controller
     public function index()
     {
         $posts = DB::table('posts')
-            ->offset(2)
-            ->limit(10)
+            ->when(function($query){
+                return $query->where('is_published', false);
+            })
             ->get();
-
-        // $posts = DB::table('posts')
-        //     ->limit(10)
-        //     ->get();
 
         
         
