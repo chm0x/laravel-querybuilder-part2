@@ -314,3 +314,19 @@ $posts = DB::table('posts')
 $unorderedPost = $posts->reorder()->get();
 $unorderedPost = $posts->reorder('title', 'desc')->get();
 ```
+
+## paginate()
+
+pagination is a technique that allows us to divide a large set of data into smaller chunks of pages. 
+
+```
+$posts = DB::table('posts')
+    # 1 parameters: specific the number of records you want.
+    # default: 15
+    ->paginate(2);
+    # dont use the get() method.
+
+$posts = DB::table('posts')
+    # Change the name to URL for pagination
+    ->paginate(2, pageName: 'test');
+```

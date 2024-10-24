@@ -13,14 +13,19 @@ class PostController extends Controller
     public function index()
     {
         $posts = DB::table('posts')
-            ->orderBy('is_published');
-            // ->get();
+            # 1 parameters: specific the number of records you want.
+            # default: 15
+            ->paginate(2, pageName: 'test');
+            # dont use the get() method.
 
-        $unorderedPost = $posts->reorder()->get();
+        // $posts = DB::table('posts')
+        //     # 1 parameters: specific the number of records you want.
+        //     # default: 15
+        //     ->paginate(2);
+        //     # dont use the get() method.
 
+        return view('posts.index', compact('posts'));
         
-        
-        dd($unorderedPost);
     }
 
     /**
