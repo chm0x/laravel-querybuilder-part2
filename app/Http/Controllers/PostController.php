@@ -13,24 +13,15 @@ class PostController extends Controller
     public function index()
     {
         $posts = DB::table('posts')
-            ->select('user_id', DB::raw('AVG(min_to_read) AS avg_mintoread'))
-            ->groupByRaw('user_id')
+            ->latest('title')
+            ->get();
+        
+        $posts = DB::table('posts')
+            ->oldest('title')
             ->get();
 
-        // $posts = DB::table('posts')
-        //     ->select('user_id', DB::raw( 'SUM(min_to_read) AS total_time' ) )
-        //     ->groupBy('user_id')
-        //     ->havingRaw('total_time > 5 ')
-        //     ->get();
-        // $posts = DB::table('posts')
-        //     ->whereRaw('created_at > now() - INTERVAL 1 DAY')
-        //     ->get();
-        // $posts = DB::table('posts')
-        //     ->selectRaw('count(*) as post_count')
-        //     ->first();
-
         
-        # returns true
+        
         dd($posts);
     }
 

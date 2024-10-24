@@ -190,3 +190,44 @@ $posts = DB::table('posts')
     ->havingRaw('total_time > 5 ')
     ->get();
 ```
+
+## orderBy()
+
+The default is ASC
+```
+$posts = DB::table('posts')
+    ->orderBy('title')
+    ->get();
+
+$posts = DB::table('posts')
+    ->orderBy('title', 'desc')
+    ->get();
+
+$posts = DB::table('posts')
+    ->orderBy('title', 'desc')
+    ->orderBy('min_to_read')
+    ->get();
+```
+
+### latest() & oldest()
+
+Default column is 'created_at' on both methods
+
+```
+# latest
+$posts = DB::table('posts')
+    ->latest()
+    ->get();
+
+$posts = DB::table('posts')
+    ->latest('title')
+    ->get();
+
+$posts = DB::table('posts')
+    ->oldest()
+    ->get();
+
+$posts = DB::table('posts')
+    ->oldest('title')
+    ->get();
+```
